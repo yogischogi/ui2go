@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Compiles and installs all programs of the ui2go distribution.
+#
+go install code.google.com/p/ui2go/event
+go install code.google.com/p/ui2go/widget
+go install code.google.com/p/ui2go/examples/01-window
+go install code.google.com/p/ui2go/examples/02-paint
+go install code.google.com/p/ui2go/examples/03-paint
+go install code.google.com/p/ui2go/examples/04-imageviewer
+go install code.google.com/p/ui2go/examples/05-layout-border
+go install code.google.com/p/ui2go/examples/06-layout-grid
+go install code.google.com/p/ui2go/examples/07-layout-inputmask
+go install code.google.com/p/ui2go/examples/08-layout-complex
+
