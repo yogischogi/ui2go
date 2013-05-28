@@ -12,4 +12,4 @@ go install code.google.com/p/ui2go/examples/05-layout-border
 go install code.google.com/p/ui2go/examples/06-layout-grid
 go install code.google.com/p/ui2go/examples/07-layout-inputmask
 go install code.google.com/p/ui2go/examples/08-layout-complex
-
+go install code.google.com/p/ui2go/examples/09-cap-test

@@ -10,15 +10,24 @@ import (
 	"strings"
 )
 
-// Screen resolution in dots per inch.
+// Metrics of the working environment.
 // XXX Dirk: Should be set automatically and adjust other length units.
-var Dpi int = 90
+var (
+	// Screen resolution in dots per inch.
+	dpi int = 90
+	// Viewing distance in mm.
+	distanceToScreen int = 600
+)
 
 // Length units in pixel units.
 var (
-	Mm   int = 10 * Dpi / 254
-	Cm   int = 100 * Dpi / 254
-	Inch int = Dpi
+	Mm   int = 10 * dpi / 254
+	Cm   int = 100 * dpi / 254
+	Inch int = dpi
+	// Recommended height of capital letters (cap height) for standard font.
+	Cap int = distanceToScreen * 7 * Mm / 1000
+	// Recommended height of em (about the same as type height) for standard font.
+	Rem int = distanceToScreen * Mm / 100
 )
 
 type GridGaps struct {
