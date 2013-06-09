@@ -7,6 +7,7 @@ package main
 
 import (
 	"code.google.com/p/ui2go/event"
+	"code.google.com/p/ui2go/toolbox"
 	"code.google.com/p/ui2go/widget"
 	"errors"
 	"fmt"
@@ -14,6 +15,8 @@ import (
 	"path/filepath"
 	"strings"
 )
+
+const resDir = "src/code.google.com/p/ui2go/examples/04-imageviewer/resources"
 
 var (
 	imageNo    int
@@ -78,9 +81,13 @@ func main() {
 		return
 	}
 	imageDir = os.Args[1]
-	resourcesDir := filepath.Join(os.Getenv("GOPATH"), "src/code.google.com/p/ui2go/resources")
+	resourcesDir, err := toolbox.FindResourcesDir(resDir)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 
-	err := readFilenames(imageDir)
+	err = readFilenames(imageDir)
 	if err != nil {
 		fmt.Printf("Could not read files in directory: %s\n", err)
 		return

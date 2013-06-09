@@ -7,13 +7,17 @@ package main
 
 import (
 	"code.google.com/p/ui2go/event"
+	"code.google.com/p/ui2go/toolbox"
 	"code.google.com/p/ui2go/widget"
 	"code.google.com/p/x-go-binding/ui"
+	"fmt"
 	"image"
 	"image/color"
 	"os"
 	"path/filepath"
 )
+
+const resDir = "src/code.google.com/p/ui2go/examples/03-paint/resources"
 
 func onCommand(evt interface{}, canvas *widget.Canvas) {
 	if ev, isCommand := evt.(event.Command); isCommand {
@@ -74,7 +78,11 @@ func onMouseEventsFromCanvas(ec <-chan interface{}, canvas *widget.Canvas) {
 }
 
 func main() {
-	resourcesDir := filepath.Join(os.Getenv("GOPATH"), "src/code.google.com/p/ui2go/resources")
+	resourcesDir, err := toolbox.FindResourcesDir(resDir)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 	win := widget.NewWindow()
 
 	// Button bar at the top

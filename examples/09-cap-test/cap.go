@@ -11,9 +11,9 @@ func main() {
 	win := widget.NewWindow()
 
 	gaps := widget.GridGaps{
-		Top:            1,
-		Bottom:         1,
-		BetweenRows:    1}.Unit(widget.Cap)
+		Top:         1,
+		Bottom:      1,
+		BetweenRows: 1}.Unit(widget.Cap)
 	win.SetGaps(gaps)
 
 	win.Addf("%c growx  wrap")
