@@ -1,14 +1,15 @@
 package widget
 
 import (
-	"code.google.com/p/ui2go/event" // Button is a simple Button that is able to display an image.
-	"code.google.com/p/x-go-binding/ui"
+	"code.google.com/p/ui2go/event"
+	"github.com/skelterjohn/go.wde"
 	"image"
 	"image/color"
 	"image/draw"
 	"os"
 )
 
+// Button is a simple Button that is able to display an image.
 type Button struct {
 	WidgetPrototype
 	Caption          string
@@ -83,25 +84,28 @@ func (b *Button) MinSize() image.Point {
 }
 
 func (b *Button) onEvent(evt interface{}) {
-	switch ev := evt.(type) {
-	case ui.MouseEvent:
-		if ev.Buttons == 1 {
-			b.isLeftButtonDown = true
-			if b.isHighlighted == false {
-				b.drawHighlighted()
-				b.SendEvent(event.DisplayRequest{})
-				b.isHighlighted = true
-			}
+	switch evt := evt.(type) {
+	case wde.MouseDownEvent:
+		if evt.Which == wde.LeftButton {
+			b.drawHighlighted()
+			b.SendEvent(event.DisplayRequest{})
+			b.isHighlighted = true
 		}
-		if ev.Buttons != 1 && b.isLeftButtonDown {
-			b.isLeftButtonDown = false
+	case wde.MouseUpEvent:
+		if evt.Which == wde.LeftButton {
 			if b.isHighlighted {
 				b.Draw()
 				b.isHighlighted = false
 				b.SendEvent(event.DisplayRequest{})
+				cmdEvent := event.Command{Command: b.Command}
+				b.SendEvent(cmdEvent)
 			}
-			cmdEvent := event.Command{Command: b.Command}
-			b.SendEvent(cmdEvent)
+		}
+	case wde.MouseExitedEvent:
+		if b.isHighlighted {
+			b.Draw()
+			b.isHighlighted = false
+			b.SendEvent(event.DisplayRequest{})
 		}
 	}
 }

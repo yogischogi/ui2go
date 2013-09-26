@@ -1,11 +1,12 @@
 package widget
 
 import (
-	"code.google.com/p/ui2go/event" // Drawable is an object, that can be drawn onto a screen.
+	"code.google.com/p/ui2go/event"
 	"image"
 	"image/draw"
 )
 
+// Drawable is anything that could be drawn onto the screen.
 type Drawable interface {
 	Draw()
 	SetArea(image.Rectangle)

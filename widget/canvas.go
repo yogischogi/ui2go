@@ -1,8 +1,8 @@
 package widget
 
 import (
-	"code.google.com/p/ui2go/event" // Abs returns the absolute value of an integer.
-	"code.google.com/p/x-go-binding/ui"
+	"code.google.com/p/ui2go/event"
+	"github.com/skelterjohn/go.wde"
 	"image"
 	"image/color"
 	"image/draw"
@@ -13,6 +13,7 @@ import (
 	"os"
 )
 
+// Abs returns the absolute value of an integer.
 func Abs(a int) int {
 	if a < 0 {
 		return -a
@@ -312,7 +313,9 @@ func (c *Canvas) LoadImage(filename string) error {
 // It overwrites event.Receiver.ReceiveEvent().
 func (c *Canvas) ReceiveEvent(evt interface{}) {
 	// Forward mouse events.
-	if _, isMouseEvent := evt.(ui.MouseEvent); isMouseEvent {
+	switch evt := evt.(type) {
+	case wde.MouseDownEvent, wde.MouseUpEvent, wde.MouseMovedEvent,
+		wde.MouseDraggedEvent, wde.MouseEnteredEvent, wde.MouseExitedEvent:
 		c.SendEvent(evt)
 	}
 }

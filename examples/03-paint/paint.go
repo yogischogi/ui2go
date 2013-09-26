@@ -9,8 +9,8 @@ import (
 	"code.google.com/p/ui2go/event"
 	"code.google.com/p/ui2go/toolbox"
 	"code.google.com/p/ui2go/widget"
-	"code.google.com/p/x-go-binding/ui"
 	"fmt"
+	"github.com/skelterjohn/go.wde"
 	"image"
 	"image/color"
 	"os"
@@ -57,21 +57,15 @@ func onCommand(evt interface{}, canvas *widget.Canvas) {
 }
 
 func onMouseEventsFromCanvas(ec <-chan interface{}, canvas *widget.Canvas) {
-	isDrawing := false
 	for evt := range ec {
-		if ev, isMouseEvt := evt.(ui.MouseEvent); isMouseEvt {
-			location := image.Point{X: ev.Loc.X, Y: ev.Loc.Y}
-			switch ev.Buttons {
-			case 1:
-				// left button pressed
-				if isDrawing {
-					canvas.LineTo(location)
-				} else {
-					canvas.DrawCircle(location)
-					isDrawing = true
-				}
-			default:
-				isDrawing = false
+		switch evt := evt.(type) {
+		case wde.MouseDownEvent:
+			if evt.Which == wde.LeftButton {
+				canvas.DrawCircle(image.Point{X: evt.Where.X, Y: evt.Where.Y})
+			}
+		case wde.MouseDraggedEvent:
+			if evt.Which == wde.LeftButton {
+				canvas.LineTo(image.Point{X: evt.Where.X, Y: evt.Where.Y})
 			}
 		}
 	}

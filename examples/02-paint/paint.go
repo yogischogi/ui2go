@@ -5,16 +5,21 @@ package main
 import (
 	"code.google.com/p/ui2go/event"
 	"code.google.com/p/ui2go/widget"
-	"code.google.com/p/x-go-binding/ui"
+	"github.com/skelterjohn/go.wde"
 	"image"
 )
 
 // onEvent handles all events, that are sent from components
 // embedded into the main window.
 func onEvent(canvas *widget.Canvas, evt interface{}) {
-	if ev, isMouseEvt := evt.(ui.MouseEvent); isMouseEvt {
-		if ev.Buttons == 1 {
-			canvas.DrawCircle(image.Point{X: ev.Loc.X, Y: ev.Loc.Y})
+	switch evt := evt.(type) {
+	case wde.MouseDownEvent:
+		if evt.Which == wde.LeftButton {
+			canvas.DrawCircle(image.Point{X: evt.Where.X, Y: evt.Where.Y})
+		}
+	case wde.MouseDraggedEvent:
+		if evt.Which == wde.LeftButton {
+			canvas.DrawCircle(image.Point{X: evt.Where.X, Y: evt.Where.Y})
 		}
 	}
 }

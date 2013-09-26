@@ -1,9 +1,9 @@
 package widget
 
 import (
-	"code.google.com/p/x-go-binding/ui"
-	//	"fmt"
 	"code.google.com/p/ui2go/event"
+	"github.com/skelterjohn/go.wde"
+	"image"
 )
 
 // DefaultContainer is a sample implementation that
@@ -43,24 +43,38 @@ func (c *DefaultContainer) Addf(layoutDef string, components ...Drawable) {
 	c.CombiGridLayout.Addf(layoutDef, components...)
 }
 
-// onEvent receives a single event.
-func (c *DefaultContainer) ReceiveEvent(evt interface{}) {
-	switch ev := evt.(type) {
-	case ui.MouseEvent:
-		// dispatch mouse events to embedded widgets
-		for _, widget := range c.widgets {
-			area := widget.Area()
-			if ev.Loc.X >= area.Min.X &&
-				ev.Loc.X <= area.Max.X &&
-				ev.Loc.Y >= area.Min.Y &&
-				ev.Loc.Y <= area.Max.Y {
-				widget.ReceiveEvent(ev)
-				break
-			}
+// dispatchEventToWidget forwards an event to the corresponding widget.
+// The widget is determined by the location of the event.
+func (c *DefaultContainer) dispatchEventToWidget(location image.Point, evt interface{}) {
+	for _, widget := range c.widgets {
+		area := widget.Area()
+		if location.X >= area.Min.X &&
+			location.X <= area.Max.X &&
+			location.Y >= area.Min.Y &&
+			location.Y <= area.Max.Y {
+			widget.ReceiveEvent(evt)
+			break
 		}
-	case ui.KeyEvent:
-	case ui.ConfigEvent:
-	case ui.ErrEvent:
+	}
+}
+
+// ReceiveEvent receives a single event.
+func (c *DefaultContainer) ReceiveEvent(evt interface{}) {
+	switch evt := evt.(type) {
+	case wde.MouseDownEvent:
+		c.dispatchEventToWidget(evt.Where, evt)
+	case wde.MouseUpEvent:
+		c.dispatchEventToWidget(evt.Where, evt)
+	case wde.MouseMovedEvent:
+		c.dispatchEventToWidget(evt.Where, evt)
+	case wde.MouseDraggedEvent:
+		c.dispatchEventToWidget(evt.Where, evt)
+	case wde.MouseEnteredEvent:
+		c.dispatchEventToWidget(evt.Where, evt)
+	case wde.MouseExitedEvent:
+		c.dispatchEventToWidget(evt.Where, evt)
+	default:
+		c.SendEvent(evt)
 	}
 }
 

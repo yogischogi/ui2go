@@ -267,7 +267,6 @@ func (l *CombiGridLayout) layout() {
 		componentArea.Max = componentArea.Max.Sub(image.Point{X: l.gaps.BetweenColumns, Y: l.gaps.BetweenRows})
 
 		entry.component.SetArea(componentArea)
-		//entry.component.SetArea(layoutArea.Add(l.area.Min))
 	}
 	l.area.Max = l.area.Min.Add(l.grid.RealSizePixel)
 	l.layoutChanged = false
@@ -275,8 +274,6 @@ func (l *CombiGridLayout) layout() {
 
 func (l *CombiGridLayout) SetArea(drawRect image.Rectangle) {
 	l.area = drawRect
-	//l.grid.DefaultSizePixel.X = l.area.Dx()
-	//l.grid.DefaultSizePixel.Y = l.area.Dy()
 	l.layoutChanged = true
 }
 
@@ -290,9 +287,6 @@ func (l *CombiGridLayout) Area() image.Rectangle {
 }
 
 func (l *CombiGridLayout) Draw() {
-	//	backgroundImg := image.Uniform{C: color.RGBA{220, 220, 220, 255}}
-	//	draw.Draw(l.screen, l.area, &backgroundImg, image.ZP, draw.Src)
-
 	greyImg := image.Uniform{C: color.RGBA{220, 220, 220, 255}}
 	redImg := image.Uniform{C: color.RGBA{255, 0, 0, 255}}
 	innerArea := l.area.Inset(2)
