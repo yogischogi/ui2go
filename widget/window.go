@@ -1,4 +1,4 @@
-// Package widget contains classes for widgets and the important
+// Package widget contains classes for widgets and the
 // main window of a program.
 package widget
 
