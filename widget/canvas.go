@@ -309,6 +309,12 @@ func (c *Canvas) LoadImage(filename string) error {
 	return nil
 }
 
+// Draw Image draws an image onto the canvas.
+func (c *Canvas) DrawImage(img image.Image) {
+	draw.Draw(c.screen, c.area, img, image.ZP, draw.Src)
+	c.SendEvent(event.DisplayRequest{})
+}
+
 // ReceiveEvent receives a single event.
 // It overwrites event.Receiver.ReceiveEvent().
 func (c *Canvas) ReceiveEvent(evt interface{}) {
