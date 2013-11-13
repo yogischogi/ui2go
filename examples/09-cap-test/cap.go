@@ -13,6 +13,8 @@ func main() {
 	gaps := widget.GridGaps{
 		Top:         1,
 		Bottom:      1,
+		Begin:       2,
+		End:         2,
 		BetweenRows: 1}.Unit(widget.Cap)
 	win.SetGaps(gaps)
 

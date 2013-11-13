@@ -2,9 +2,8 @@ package widget
 
 import (
 	"fmt"
+	"github.com/ungerik/go-cairo"
 	"image"
-	"image/color"
-	"image/draw"
 	"os"
 	"strconv"
 	"strings"
@@ -83,7 +82,7 @@ type CombiGridLayout struct {
 	entries       []*CombiGridEntry
 	grid          *flexGrid
 	area          image.Rectangle
-	screen        draw.Image
+	surface       *cairo.Surface
 	layoutChanged bool
 }
 
@@ -99,7 +98,7 @@ func (l *CombiGridLayout) AddWithLayout(component Drawable, layout *LayoutDef) {
 	// calculate layout constraints for flexGridLayout
 	var flexGridLayout flexGridLayoutDef
 	if component != nil {
-		component.SetScreen(l.screen)
+		component.SetSurface(l.surface)
 		flexGridLayout.dxPixel = component.MinSize().X + l.gaps.BetweenColumns
 		flexGridLayout.dyPixel = component.MinSize().Y + l.gaps.BetweenRows
 	}
@@ -257,7 +256,7 @@ func (l *CombiGridLayout) layout() {
 		}
 		// adjust offset and calculate gaps, borders, insets, growx, growy, ...
 
-		// Offset by layout area position on the screen
+		// Offset by layout area position on the surface
 		componentArea := layoutArea.Add(l.area.Min)
 
 		// Offset by combigrid layout border
@@ -287,12 +286,7 @@ func (l *CombiGridLayout) Area() image.Rectangle {
 }
 
 func (l *CombiGridLayout) Draw() {
-	greyImg := image.Uniform{C: color.RGBA{220, 220, 220, 255}}
-	redImg := image.Uniform{C: color.RGBA{255, 0, 0, 255}}
-	innerArea := l.area.Inset(2)
-	draw.Draw(l.screen, l.area, &redImg, image.ZP, draw.Src)
-	draw.Draw(l.screen, innerArea, &greyImg, image.ZP, draw.Src)
-
+	drawDummyWidget(l.surface, l.area)
 	if l.layoutChanged {
 		l.layout()
 	}
@@ -301,15 +295,15 @@ func (l *CombiGridLayout) Draw() {
 	}
 }
 
-func (l *CombiGridLayout) SetScreen(screen draw.Image) {
-	l.screen = screen
+func (l *CombiGridLayout) SetSurface(surface *cairo.Surface) {
+	l.surface = surface
 	for _, entry := range l.entries {
-		entry.component.SetScreen(screen)
+		entry.component.SetSurface(surface)
 	}
 }
 
-func (l *CombiGridLayout) Screen() draw.Image {
-	return l.screen
+func (l *CombiGridLayout) Surface() *cairo.Surface {
+	return l.surface
 }
 
 func (l *CombiGridLayout) MinSize() image.Point {

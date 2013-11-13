@@ -2,8 +2,8 @@ package widget
 
 import (
 	"code.google.com/p/ui2go/event"
+	"github.com/ungerik/go-cairo"
 	"image"
-	"image/draw"
 )
 
 // WidgetPrototype is a simple widget that implements the Widget interface.
@@ -13,7 +13,7 @@ type WidgetPrototype struct {
 	event.Receiver
 	area    image.Rectangle
 	minSize image.Point
-	screen  draw.Image
+	surface *cairo.Surface
 }
 
 func NewWidgetPrototype() *WidgetPrototype {
@@ -35,12 +35,12 @@ func (w *WidgetPrototype) Area() image.Rectangle {
 	return w.area
 }
 
-func (w *WidgetPrototype) SetScreen(screen draw.Image) {
-	w.screen = screen
+func (w *WidgetPrototype) SetSurface(surface *cairo.Surface) {
+	w.surface = surface
 }
 
-func (w *WidgetPrototype) Screen() draw.Image {
-	return w.screen
+func (w *WidgetPrototype) Surface() *cairo.Surface {
+	return w.surface
 }
 
 func (w *WidgetPrototype) MinSize() image.Point {

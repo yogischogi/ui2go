@@ -1,9 +1,11 @@
+// Package widget contains classes for widgets and the
+// main window of a program.
 package widget
 
 import (
 	"code.google.com/p/ui2go/event"
+	"github.com/ungerik/go-cairo"
 	"image"
-	"image/draw"
 )
 
 // Drawable is anything that could be drawn onto the screen.
@@ -11,8 +13,8 @@ type Drawable interface {
 	Draw()
 	SetArea(image.Rectangle)
 	Area() image.Rectangle
-	SetScreen(draw.Image)
-	Screen() draw.Image
+	SetSurface(*cairo.Surface)
+	Surface() *cairo.Surface
 
 	// MinSize is the minimum space the object needs to
 	// to be displayed. It is calculated by the object itself.
@@ -40,4 +42,11 @@ type Container interface {
 	Layout
 	event.Receiver
 	event.Sender
+}
+
+// Accessible is a simple interface for accessibility purposes.
+type Accessible interface {
+	Caption() string
+	Tip() string
+	Description() string
 }

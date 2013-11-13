@@ -5,7 +5,6 @@ package main
 import (
 	"code.google.com/p/ui2go/event"
 	"code.google.com/p/ui2go/widget"
-	"github.com/skelterjohn/go.wde"
 	"image"
 )
 
@@ -13,13 +12,14 @@ import (
 // embedded into the main window.
 func onEvent(canvas *widget.Canvas, evt interface{}) {
 	switch evt := evt.(type) {
-	case wde.MouseDownEvent:
-		if evt.Which == wde.LeftButton {
-			canvas.DrawCircle(image.Point{X: evt.Where.X, Y: evt.Where.Y})
-		}
-	case wde.MouseDraggedEvent:
-		if evt.Which == wde.LeftButton {
-			canvas.DrawCircle(image.Point{X: evt.Where.X, Y: evt.Where.Y})
+	case event.PointerEvt:
+		switch evt.Type {
+		case event.PointerTouchEvt:
+			canvas.MoveTo(image.Point{X: evt.X, Y: evt.Y})
+		case event.PointerMoveEvt:
+			if evt.State == event.PointerStateTouch {
+				canvas.LineTo(image.Point{X: evt.X, Y: evt.Y})
+			}
 		}
 	}
 }

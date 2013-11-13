@@ -7,10 +7,8 @@ package main
 
 import (
 	"code.google.com/p/ui2go/event"
-	"code.google.com/p/ui2go/toolbox"
 	"code.google.com/p/ui2go/widget"
 	"fmt"
-	"github.com/skelterjohn/go.wde"
 	"image"
 	"image/color"
 	"os"
@@ -23,11 +21,11 @@ func onCommand(evt interface{}, canvas *widget.Canvas) {
 	if ev, isCommand := evt.(event.Command); isCommand {
 		switch ev.Command {
 		case "SmallBrush":
-			canvas.SetBrushRadius(7)
+			canvas.SetBrushWidth(14)
 		case "MediumBrush":
-			canvas.SetBrushRadius(16)
+			canvas.SetBrushWidth(32)
 		case "BigBrush":
-			canvas.SetBrushRadius(27)
+			canvas.SetBrushWidth(54)
 		case "RedBrush":
 			canvas.SetBrushColor(color.RGBA{R: 255, G: 0, B: 0, A: 255})
 		case "GreenBrush":
@@ -59,20 +57,21 @@ func onCommand(evt interface{}, canvas *widget.Canvas) {
 func onMouseEventsFromCanvas(ec <-chan interface{}, canvas *widget.Canvas) {
 	for evt := range ec {
 		switch evt := evt.(type) {
-		case wde.MouseDownEvent:
-			if evt.Which == wde.LeftButton {
-				canvas.DrawCircle(image.Point{X: evt.Where.X, Y: evt.Where.Y})
-			}
-		case wde.MouseDraggedEvent:
-			if evt.Which == wde.LeftButton {
-				canvas.LineTo(image.Point{X: evt.Where.X, Y: evt.Where.Y})
+		case event.PointerEvt:
+			switch evt.Type {
+			case event.PointerTouchEvt:
+				canvas.MoveTo(image.Point{X: evt.X, Y: evt.Y})
+			case event.PointerMoveEvt:
+				if evt.State == event.PointerStateTouch {
+					canvas.LineTo(image.Point{X: evt.X, Y: evt.Y})
+				}
 			}
 		}
 	}
 }
 
 func main() {
-	resourcesDir, err := toolbox.FindResourcesDir(resDir)
+	resourcesDir, err := widget.FindResourcesDir(resDir)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

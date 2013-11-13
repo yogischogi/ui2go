@@ -7,7 +7,6 @@ package main
 
 import (
 	"code.google.com/p/ui2go/event"
-	"code.google.com/p/ui2go/toolbox"
 	"code.google.com/p/ui2go/widget"
 	"errors"
 	"fmt"
@@ -33,20 +32,22 @@ func onEvent(evt interface{}, canvas *widget.Canvas) {
 				imageNo = len(imageNames) - 1
 			}
 			fmt.Printf("%s\n", imageNames[imageNo])
-			err := canvas.LoadImage(filepath.Join(imageDir, imageNames[imageNo]))
+			img, err := widget.LoadImage(filepath.Join(imageDir, imageNames[imageNo]))
 			if err != nil {
 				fmt.Printf("Error loading image: %s\n", err)
 			}
+			canvas.SetBackgroundImage(img)
 		case "NextImage":
 			imageNo++
 			if imageNo == len(imageNames) {
 				imageNo = 0
 			}
 			fmt.Printf("%s\n", imageNames[imageNo])
-			err := canvas.LoadImage(filepath.Join(imageDir, imageNames[imageNo]))
+			img, err := widget.LoadImage(filepath.Join(imageDir, imageNames[imageNo]))
 			if err != nil {
 				fmt.Printf("Error loading image: %s\n", err)
 			}
+			canvas.SetBackgroundImage(img)
 		}
 	}
 }
@@ -81,7 +82,7 @@ func main() {
 		return
 	}
 	imageDir = os.Args[1]
-	resourcesDir, err := toolbox.FindResourcesDir(resDir)
+	resourcesDir, err := widget.FindResourcesDir(resDir)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -102,8 +103,9 @@ func main() {
 	btnNext := widget.NewButton("NextImage")
 	btnNext.LoadImage(filepath.Join(resourcesDir, "arrow-right.png"))
 
-	win.Addf("%c %c                  wrap", btnPrevious, btnNext)
-	win.Addf("%c spanx 2 growx growy     ", canvas)
+	// 2 buttons and one filler
+	win.Addf("%c %c %c growx         wrap", btnPrevious, btnNext)
+	win.Addf("%c spanx 3 growx growy     ", canvas)
 
 	event.NewReceiverFor(win).SetEvtHandler(func(evt interface{}) { onEvent(evt, canvas) })
 

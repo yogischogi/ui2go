@@ -3,9 +3,8 @@ package widget
 import (
 	"code.google.com/p/ui2go/event"
 	"fmt"
+	"github.com/ungerik/go-cairo"
 	"image"
-	"image/color"
-	"image/draw"
 )
 
 // TestWidget is a simple widget for testing purposes.
@@ -15,7 +14,7 @@ type TestWidget struct {
 	event.Receiver
 	area    image.Rectangle
 	minSize image.Point
-	screen  draw.Image
+	surface *cairo.Surface
 }
 
 func NewTestWidget() *TestWidget {
@@ -27,11 +26,7 @@ func NewTestWidget() *TestWidget {
 }
 
 func (w *TestWidget) Draw() {
-	greenImg := image.Uniform{C: color.RGBA{0, 255, 0, 255}}
-	blueImg := image.Uniform{C: color.RGBA{0, 0, 255, 255}}
-	innerArea := w.area.Inset(2)
-	draw.Draw(w.screen, w.area, &greenImg, image.ZP, draw.Src)
-	draw.Draw(w.screen, innerArea, &blueImg, image.ZP, draw.Src)
+	drawDummyWidget(w.surface, w.area)
 }
 
 func (w *TestWidget) SetArea(drawRect image.Rectangle) {
@@ -42,12 +37,12 @@ func (w *TestWidget) Area() image.Rectangle {
 	return w.area
 }
 
-func (w *TestWidget) SetScreen(screen draw.Image) {
-	w.screen = screen
+func (w *TestWidget) SetSurface(surface *cairo.Surface) {
+	w.surface = surface
 }
 
-func (w *TestWidget) Screen() draw.Image {
-	return w.screen
+func (w *TestWidget) Surface() *cairo.Surface {
+	return w.surface
 }
 
 func (w *TestWidget) MinSize() image.Point {

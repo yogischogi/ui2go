@@ -1,8 +1,3 @@
-// Package event provides classes and interfaces to implement
-// event senders and receivers.
-//
-// There are also some types of events, but these only serve
-// as examples and are not thought through.
 package event
 
 // Receiver is the basic interface that every event receiver
@@ -28,4 +23,18 @@ type Sender interface {
 	SendEvent(evt interface{})
 	AddReceiver(receiver Receiver)
 	RemoveReceiver(receiver Receiver)
+}
+
+// Event is the basic interface for all events.
+type Event interface {
+	// Sender of the event. This is implemented as a string,
+	// because it's great for debugging and possible network
+	// implementations.
+	Sender() string
+
+	// Time is important for many purposes as
+	// double clicks, drawing operations, reaction
+	// to events in a multitasking environments or
+	// simple timeouts. It will be implemented later.
+	// Time()
 }

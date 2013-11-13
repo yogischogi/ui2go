@@ -2,8 +2,6 @@ package widget
 
 import (
 	"code.google.com/p/ui2go/event"
-	"github.com/skelterjohn/go.wde"
-	"image"
 )
 
 // DefaultContainer is a sample implementation that
@@ -43,36 +41,21 @@ func (c *DefaultContainer) Addf(layoutDef string, components ...Drawable) {
 	c.CombiGridLayout.Addf(layoutDef, components...)
 }
 
-// dispatchEventToWidget forwards an event to the corresponding widget.
-// The widget is determined by the location of the event.
-func (c *DefaultContainer) dispatchEventToWidget(location image.Point, evt interface{}) {
-	for _, widget := range c.widgets {
-		area := widget.Area()
-		if location.X >= area.Min.X &&
-			location.X <= area.Max.X &&
-			location.Y >= area.Min.Y &&
-			location.Y <= area.Max.Y {
-			widget.ReceiveEvent(evt)
-			break
-		}
-	}
-}
-
 // ReceiveEvent receives a single event.
 func (c *DefaultContainer) ReceiveEvent(evt interface{}) {
 	switch evt := evt.(type) {
-	case wde.MouseDownEvent:
-		c.dispatchEventToWidget(evt.Where, evt)
-	case wde.MouseUpEvent:
-		c.dispatchEventToWidget(evt.Where, evt)
-	case wde.MouseMovedEvent:
-		c.dispatchEventToWidget(evt.Where, evt)
-	case wde.MouseDraggedEvent:
-		c.dispatchEventToWidget(evt.Where, evt)
-	case wde.MouseEnteredEvent:
-		c.dispatchEventToWidget(evt.Where, evt)
-	case wde.MouseExitedEvent:
-		c.dispatchEventToWidget(evt.Where, evt)
+	case event.PointerEvt:
+		// Dispatch event
+		for _, widget := range c.widgets {
+			area := widget.Area()
+			if evt.X >= area.Min.X &&
+				evt.X <= area.Max.X &&
+				evt.Y >= area.Min.Y &&
+				evt.Y <= area.Max.Y {
+				widget.ReceiveEvent(evt)
+				break
+			}
+		}
 	default:
 		c.SendEvent(evt)
 	}

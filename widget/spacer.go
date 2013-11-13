@@ -1,8 +1,8 @@
 package widget
 
 import (
+	"github.com/ungerik/go-cairo"
 	"image"
-	"image/draw"
 )
 
 // Spacer is a Drawable object that can be used to add some space
@@ -10,7 +10,7 @@ import (
 type Spacer struct {
 	area    image.Rectangle
 	minSize image.Point
-	screen  draw.Image
+	surface *cairo.Surface
 }
 
 func NewSpacer() *Spacer {
@@ -32,12 +32,12 @@ func (s *Spacer) Area() image.Rectangle {
 	return s.area
 }
 
-func (s *Spacer) SetScreen(screen draw.Image) {
-	s.screen = screen
+func (s *Spacer) SetSurface(surface *cairo.Surface) {
+	s.surface = surface
 }
 
-func (s *Spacer) Screen() draw.Image {
-	return s.screen
+func (s *Spacer) Surface() *cairo.Surface {
+	return s.surface
 }
 
 func (s *Spacer) MinSize() image.Point {

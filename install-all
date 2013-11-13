@@ -2,8 +2,8 @@
 #
 # Compiles and installs all programs of the ui2go distribution.
 #
+go install code.google.com/p/ui2go/native
 go install code.google.com/p/ui2go/event
-go install code.google.com/p/ui2go/toolbox
 go install code.google.com/p/ui2go/widget
 go install code.google.com/p/ui2go/examples/01-window
 go install code.google.com/p/ui2go/examples/02-paint

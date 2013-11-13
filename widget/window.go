@@ -1,13 +1,9 @@
-// Package widget contains classes for widgets and the
-// main window of a program.
 package widget
 
 import (
 	"code.google.com/p/ui2go/event"
-	"fmt"
-	"github.com/skelterjohn/go.wde"
-	_ "github.com/skelterjohn/go.wde/init"
-	"os"
+	"code.google.com/p/ui2go/native"
+	"image"
 )
 
 // Window represents a typical graphical window.
@@ -15,19 +11,16 @@ import (
 // In this version of the code it is a wde window.
 type Window struct {
 	DefaultContainer
-	osWindow            wde.Window
+	nativeWin           native.Window
 	receiverForEmbedded event.Receiver
 }
 
 func NewWindow() *Window {
 	w := new(Window)
-	win, err := wde.NewWindow(800, 600)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	w.osWindow = win
+	win := native.NewWindow()
+	w.nativeWin = win
 	w.DefaultContainer = *NewDefaultContainer()
+	w.DefaultContainer.SetSurface(w.nativeWin.Surface())
 	w.receiverForEmbedded = event.NewReceiverFor(w.DefaultContainer)
 	w.receiverForEmbedded.SetEvtChanHandler(func(ec <-chan interface{}) { w.ReceiveFromEmbeddedChan(ec) })
 	return w
@@ -36,38 +29,40 @@ func NewWindow() *Window {
 // Show draws the contents of the window and makes it visible on the screen.
 func (w *Window) Show() {
 	w.Draw()
-	w.osWindow.Show()
 }
 
 // Draw completely draws the contents of a window.
 // This includes a recalculation of the position of widgets.
 func (w *Window) Draw() {
-	w.DefaultContainer.SetScreen(w.osWindow.Screen())
-	w.DefaultContainer.SetArea(w.osWindow.Screen().Bounds())
 	w.DefaultContainer.Draw()
-	w.osWindow.FlushImage(w.DefaultContainer.Screen().Bounds())
+	w.nativeWin.Flush()
 }
 
 func (w *Window) Close() {
-	err := w.osWindow.Close()
+	err := w.nativeWin.Close()
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		panic("Could not close window.")
 	}
-	wde.Stop()
 }
 
 // readEvents forwards native window events to the embedded container.
-func (w *Window) readEvents(osWinIn <-chan interface{}) {
-	for evt := range osWinIn {
-		w.DefaultContainer.ReceiveEvent(evt)
+func (w *Window) readEvents(nativeWinIn <-chan interface{}) {
+	for evt := range nativeWinIn {
+		switch evt := evt.(type) {
+		case event.ExposeEvt:
+			w.DefaultContainer.SetArea(image.Rect(0, 0, evt.Dx, evt.Dy))
+			w.Draw()
+		case event.CloseEvt:
+			w.Close()
+		default:
+			w.DefaultContainer.ReceiveEvent(evt)
+		}
 	}
 }
 
 // Run just starts the main event loop.
 func (w *Window) Run() {
-	go w.readEvents(w.osWindow.EventChan())
-	wde.Run()
+	w.readEvents(w.nativeWin.EventChan())
 }
 
 // ReceiveFromEmbeddedChan receives events from embedded components.
@@ -75,15 +70,11 @@ func (w *Window) ReceiveFromEmbeddedChan(ec <-chan interface{}) {
 	for evt := range ec {
 		switch ev := evt.(type) {
 		case event.DisplayRequest:
-			w.osWindow.FlushImage()
+			w.nativeWin.Flush()
 		case event.Command:
 			if ev.Command == "Close" {
 				w.Close()
 			}
-		case wde.CloseEvent:
-			w.Close()
-		case wde.ResizeEvent:
-			w.Draw()
 		}
 	}
 }
