@@ -53,14 +53,14 @@ func FindResourcesDir(resDir string) (dir string, err error) {
 // drawDummyWidget draws a simple widget for testing purposes.
 func drawDummyWidget(surface *cairo.Surface, area image.Rectangle) {
 	// green image
-	x, y, dx, dy := RectDimensions(area)
+	x, y, dx, dy := RectSize(area)
 	surface.Rectangle(x, y, dx, dy)
 	surface.SetSourceRGB(0, 255, 0)
 	surface.Fill()
 
 	// blue image
 	innerArea := area.Inset(2)
-	x, y, dx, dy = RectDimensions(innerArea)
+	x, y, dx, dy = RectSize(innerArea)
 	surface.Rectangle(x, y, dx, dy)
 	surface.SetSourceRGB(0, 0, 255)
 	surface.Fill()
@@ -68,9 +68,9 @@ func drawDummyWidget(surface *cairo.Surface, area image.Rectangle) {
 	surface.Flush()
 }
 
-// RectDimensions returns the dimensions of a Rectangle
+// RectSize returns the dimensions of a Rectangle
 // as float64 values.
-func RectDimensions(area image.Rectangle) (x, y, dx, dy float64) {
+func RectSize(area image.Rectangle) (x, y, dx, dy float64) {
 	x = float64(area.Min.X)
 	y = float64(area.Min.Y)
 	dx = float64(area.Dx())

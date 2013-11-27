@@ -29,7 +29,7 @@ func NewButton(caption string) *Button {
 
 func (b *Button) Draw() {
 	if b.bgImage != nil {
-		x, y, _, _ := RectDimensions(b.area)
+		x, y, _, _ := RectSize(b.area)
 		imgSf := cairo.NewSurfaceFromImage(b.bgImage)
 		b.surface.SetSourceSurface(imgSf, x, y)
 		b.surface.Paint()
@@ -41,7 +41,7 @@ func (b *Button) Draw() {
 
 func (b *Button) drawHighlighted() {
 	if b.bgImage != nil {
-		x, y, dx, dy := RectDimensions(b.area)
+		x, y, dx, dy := RectSize(b.area)
 		b.surface.Rectangle(x, y, dx, dy)
 		b.surface.SetSourceRGBA(0, 0, 0, 0.3)
 		b.surface.Fill()

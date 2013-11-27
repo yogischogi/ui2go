@@ -8,6 +8,16 @@ import (
 	"image"
 )
 
+// registry is a widget registry.
+// The purpose is to access widgets through an id, for example
+// Button("okButton").SetText("All Right"), where Button is a
+// function that asks the registry for the appropriate widget.
+// This is very useful when the widgets are to be identified
+// by an id, like in web applications or a textual UI description.
+// Newly created widgets should register at this registry and
+// provide an access function like func Label(id string) *Label.
+var registry = make(map[string]*Widget)
+
 // Drawable is anything that could be drawn onto the screen.
 type Drawable interface {
 	Draw()

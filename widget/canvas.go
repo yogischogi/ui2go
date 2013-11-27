@@ -75,7 +75,7 @@ func (c *Canvas) SetBackgroundImage(img image.Image) {
 func (c *Canvas) Draw() {
 	// Draw background color
 	r, g, b, _ := rgba(c.backgroundColor)
-	x, y, dx, dy := RectDimensions(c.area)
+	x, y, dx, dy := RectSize(c.area)
 	c.surface.Rectangle(x, y, dx, dy)
 	c.surface.SetSourceRGB(r, g, b)
 	c.surface.Fill()
