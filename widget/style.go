@@ -8,6 +8,8 @@ import (
 
 // Style determines the drawing style like CSS.
 type Style struct {
+	FontSize float64
+
 	Color      color.Color
 	Background color.Color
 
@@ -41,12 +43,20 @@ func (s *Style) Size() (dx, dy int) {
 	return
 }
 
+// ContentPosition() returns the top left postion for content after
+// the borders, paddings and margins are drawn.
+func (s *Style) ContentPosition() (x, y int) {
+	x = s.PaddingLeft + s.BorderLeftWidth + s.MarginLeft
+	y = s.PaddingTop + s.BorderTopWidth + s.MarginTop
+	return
+}
+
 func (s *Style) Draw(surface *cairo.Surface, area image.Rectangle) {
 	// Outer border points
-	borderXmin := float64(area.Min.X) + float64(s.PaddingLeft)
-	borderYmin := float64(area.Min.Y) + float64(s.PaddingTop)
-	borderXmax := float64(area.Max.X) - float64(s.PaddingRight)
-	borderYmax := float64(area.Max.Y) - float64(s.PaddingBottom)
+	borderXmin := float64(area.Min.X) + float64(s.MarginLeft)
+	borderYmin := float64(area.Min.Y) + float64(s.MarginTop)
+	borderXmax := float64(area.Max.X) - float64(s.MarginRight)
+	borderYmax := float64(area.Max.Y) - float64(s.MarginBottom)
 
 	// Inner border points
 	innerXmin := borderXmin + float64(s.BorderLeftWidth)

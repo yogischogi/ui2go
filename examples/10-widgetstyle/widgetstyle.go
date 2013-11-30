@@ -12,7 +12,7 @@ func main() {
 	w4 := widget.NewTestWidget()
 
 	win.Addf("%c growxy %c growx wrap", w1, w2)
-	win.Addf("%c growy  %c growx", w3, w4)
+	win.Addf("%c growy  %c           ", w3, w4)
 
 	win.Show()
 	win.Run()
