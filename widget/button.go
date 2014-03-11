@@ -10,7 +10,7 @@ import (
 
 // Button is a simple Button that is able to display an image.
 type Button struct {
-	WidgetPrototype
+	WidgetPart
 	Caption          string
 	Command          string
 	bgImage          *extimage.BGRA
@@ -20,7 +20,7 @@ type Button struct {
 
 func NewButton(caption string) *Button {
 	b := new(Button)
-	b.WidgetPrototype = *NewWidgetPrototype()
+	b.WidgetPart = *NewWidgetPart()
 	b.Caption = caption
 	b.Command = caption
 	b.SetEvtHandler(func(evt interface{}) { b.onEvent(evt) })

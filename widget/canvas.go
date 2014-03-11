@@ -10,7 +10,7 @@ import (
 )
 
 type Canvas struct {
-	WidgetPrototype
+	WidgetPart
 	backgroundColor color.Color
 	backgroundImage *extimage.BGRA
 	brushColor      color.Color
@@ -20,7 +20,7 @@ type Canvas struct {
 
 func NewCanvas() *Canvas {
 	return &Canvas{
-		WidgetPrototype: *NewWidgetPrototype(),
+		WidgetPart: *NewWidgetPart(),
 		backgroundColor: color.RGBA{R: 255, G: 255, B: 255, A: 255},
 		brushColor:      color.RGBA{R: 0, G: 0, B: 0, A: 255},
 		brushWidth:      10}
@@ -71,7 +71,7 @@ func (c *Canvas) SetBackgroundImage(img image.Image) {
 	c.Draw()
 }
 
-// Draw overwrites Draw in WidgetPrototype.
+// Draw draws the canvas onto the surface.
 func (c *Canvas) Draw() {
 	// Draw background color
 	r, g, b, _ := rgba(c.backgroundColor)
