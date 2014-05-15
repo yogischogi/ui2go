@@ -27,6 +27,23 @@ func NewButton(caption string) *Button {
 	return b
 }
 
+func NewButtonFromJson(jsonDef []byte) Drawable {
+	return NewButton("Default")
+}
+
+func GetButton(name string) *Button {
+	var result *Button
+	drawable := ComponentRegistry[name]
+	if drawable != nil {
+		if button, ok := drawable.(*Button); ok {
+			result = button
+		} else {
+			result = nil
+		}
+	}
+	return result
+}
+
 func (b *Button) Draw() {
 	if b.bgImage != nil {
 		x, y, _, _ := RectSize(b.area)

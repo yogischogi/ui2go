@@ -20,10 +20,27 @@ type Canvas struct {
 
 func NewCanvas() *Canvas {
 	return &Canvas{
-		WidgetPart: *NewWidgetPart(),
+		WidgetPart:      *NewWidgetPart(),
 		backgroundColor: color.RGBA{R: 255, G: 255, B: 255, A: 255},
 		brushColor:      color.RGBA{R: 0, G: 0, B: 0, A: 255},
 		brushWidth:      10}
+}
+
+func NewCanvasFromJson(jsonDef []byte) Drawable {
+	return NewCanvas()
+}
+
+func GetCanvas(name string) *Canvas {
+	var result *Canvas
+	drawable := ComponentRegistry[name]
+	if drawable != nil {
+		if canvas, ok := drawable.(*Canvas); ok {
+			result = canvas
+		} else {
+			result = nil
+		}
+	}
+	return result
 }
 
 // SetBrushWidth sets the width of the drawing brush

@@ -6,9 +6,18 @@ import (
 	"code.google.com/p/ui2go/event"
 	"github.com/ungerik/go-cairo"
 	"image"
+	"strconv"
 )
 
-// registry is a widget registry.
+func init() {
+	// Add constructors to ConstructorRegistry
+	ConstructorRegistry["Button"] = NewButtonFromJson
+	ConstructorRegistry["Canvas"] = NewCanvasFromJson
+	ConstructorRegistry["Spacer"] = NewSpacerFromJson
+}
+
+// ComponentRegistry is a registry for all components that can
+// be drawn onto the screen.
 // The purpose is to access widgets through an id, for example
 // Button("okButton").SetText("All Right"), where Button is a
 // function that asks the registry for the appropriate widget.
@@ -16,7 +25,20 @@ import (
 // by an id, like in web applications or a textual UI description.
 // Newly created widgets should register at this registry and
 // provide an access function like func Label(id string) *Label.
-var registry = make(map[string]*Widget)
+var ComponentRegistry = make(map[string]Drawable)
+
+// ContructorRegistry maps component names to component constructors
+// that use a JSON definition.
+var ConstructorRegistry = make(map[string]func(json []byte) Drawable)
+
+// idCounter is used to create unique IDs for different components.
+var idCounter int = 0
+
+// NewId creates a unique string as an identifier.
+func NewId() string {
+	idCounter++
+	return strconv.Itoa(idCounter)
+}
 
 // Drawable is anything that could be drawn onto the screen.
 type Drawable interface {

@@ -26,6 +26,30 @@ func NewWindow() *Window {
 	return w
 }
 
+func NewWindowFromJson(jsonDef []byte) *Window {
+	w := new(Window)
+	win := native.NewWindow()
+	w.nativeWin = win
+	w.DefaultContainer = *NewDefaultContainerFromJson(jsonDef)
+	w.DefaultContainer.SetSurface(w.nativeWin.Surface())
+	w.receiverForEmbedded = event.NewReceiverFor(w.DefaultContainer)
+	w.receiverForEmbedded.SetEvtChanHandler(func(ec <-chan interface{}) { w.ReceiveFromEmbeddedChan(ec) })
+	return w
+}
+
+func GetWindow(name string) *Window {
+	var result *Window
+	drawable := ComponentRegistry[name]
+	if drawable != nil {
+		if win, ok := drawable.(*Window); ok {
+			result = win
+		} else {
+			result = nil
+		}
+	}
+	return result
+}
+
 // Show draws the contents of the window and makes it visible on the screen.
 func (w *Window) Show() {
 	w.Draw()

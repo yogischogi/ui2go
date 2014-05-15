@@ -20,6 +20,23 @@ func NewSpacer() *Spacer {
 	return &spacer
 }
 
+func NewSpacerFromJson(jsonDef []byte) Drawable {
+	return NewSpacer()
+}
+
+func GetSpacer(name string) *Spacer {
+	var result *Spacer
+	drawable := ComponentRegistry[name]
+	if drawable != nil {
+		if spacer, ok := drawable.(*Spacer); ok {
+			result = spacer
+		} else {
+			result = nil
+		}
+	}
+	return result
+}
+
 func (s *Spacer) Draw() {
 	// do nothing
 }

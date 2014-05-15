@@ -153,7 +153,7 @@ func (l *CombiGridLayout) Addf(layoutDef string, components ...Drawable) {
 			if iComponent < len(components) {
 				component = components[iComponent]
 			} else {
-				component = NewTestWidget()
+				component = NewBlankWidget()
 			}
 			for fDef = iDef + 1; fDef < len(definitions); fDef++ {
 				if definitions[fDef] == "%c" {

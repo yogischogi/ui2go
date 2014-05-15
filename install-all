@@ -15,3 +15,4 @@ go install code.google.com/p/ui2go/examples/07-layout-inputmask
 go install code.google.com/p/ui2go/examples/08-layout-complex
 go install code.google.com/p/ui2go/examples/09-cap-test
 go install code.google.com/p/ui2go/examples/10-widgetstyle
+go install code.google.com/p/ui2go/examples/11-json-layout-border

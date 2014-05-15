@@ -11,7 +11,7 @@ import (
 // be added.
 // WidgetPart can be used to construct new widgets by mixing it into
 // the new widget class.
-// WidgetPart replaces the old WidgetPart to avoid 
+// WidgetPart replaces the old WidgetPart to avoid
 // overwriting methods in prototype based inheritence.
 type WidgetPart struct {
 	event.Sender
