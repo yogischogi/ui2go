@@ -14,6 +14,21 @@ import (
 	"path/filepath"
 )
 
+// IdlToJson converts a string in Interface Description Language (Idl)
+// to Json. At the moment Idl is just Json with newlines, cursor returns
+// and tabs allowed. This makes the interface descriptions more readable.
+func IdlToJson(idl string) []byte {
+	buffer := make([]byte, len(idl))
+	copy(buffer, idl)
+	for i, c := range buffer {
+		// Replace newline, cursor return and tab.
+		if c == '\n' || c == '\r' || c == '\t' {
+			buffer[i] = ' '
+		}
+	}
+	return []byte(buffer)
+}
+
 // LoadImage loads an image from a file.
 // For good drawing performance it returns an *extimage.BGRA.
 // extimage.BGRA can be used directly for cairo image surfaces.

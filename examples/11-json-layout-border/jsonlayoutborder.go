@@ -4,12 +4,11 @@ package main
 import "code.google.com/p/ui2go/widget"
 
 func main() {
-	gui := "{\"Layout\": \"" +
-		"TopButton spanx 3                          wrap " +
-		"LeftButton MiddleButton growxy RightButton wrap " +
-		"BottomButton spanx 3                            " +
-		"\" }"
-	win := widget.NewWindowFromJson([]byte(gui))
+	gui := `{ "Layout":
+		"TopButton spanx 3                          wrap
+		 LeftButton MiddleButton growxy RightButton wrap
+		 BottomButton spanx 3" }`
+	win := widget.NewWindowFromJson(widget.IdlToJson(gui))
 	win.Show()
 	win.Run()
 }
