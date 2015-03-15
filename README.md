@@ -12,6 +12,7 @@ dispatching and widget layout management.
 
 * [White Paper](http://www.projectory.de/ui2go/whitepaper/index.html): General ideas and concepts.
 * [Design Decisions](http://www.projectory.de/ui2go/designdecisions/designdecisions.html): Thoughts about the design in short notation. 
+* [Source Code](http://godoc.org/github.com/yogischogi/ui2go)
 
 
 # Installation
