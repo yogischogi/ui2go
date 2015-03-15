@@ -1,8 +1,8 @@
 package widget
 
 import (
-	"code.google.com/p/ui2go/event"
 	"github.com/ungerik/go-cairo"
+	"github.com/yogischogi/ui2go/event"
 	"image"
 )
 

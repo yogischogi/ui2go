@@ -6,16 +6,16 @@
 package main
 
 import (
-	"code.google.com/p/ui2go/event"
-	"code.google.com/p/ui2go/widget"
 	"fmt"
+	"github.com/yogischogi/ui2go/event"
+	"github.com/yogischogi/ui2go/widget"
 	"image"
 	"image/color"
 	"os"
 	"path/filepath"
 )
 
-const resDir = "src/code.google.com/p/ui2go/examples/03-paint/resources"
+const resDir = "src/github.com/yogischogi/ui2go/examples/03-paint/resources"
 
 func onCommand(evt interface{}, canvas *widget.Canvas) {
 	if ev, isCommand := evt.(event.Command); isCommand {

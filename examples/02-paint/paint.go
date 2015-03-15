@@ -3,8 +3,8 @@
 package main
 
 import (
-	"code.google.com/p/ui2go/event"
-	"code.google.com/p/ui2go/widget"
+	"github.com/yogischogi/ui2go/event"
+	"github.com/yogischogi/ui2go/widget"
 	"image"
 )
 

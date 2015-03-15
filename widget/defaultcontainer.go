@@ -1,8 +1,8 @@
 package widget
 
 import (
-	"code.google.com/p/ui2go/event"
 	"encoding/json"
+	"github.com/yogischogi/ui2go/event"
 	"strings"
 )
 

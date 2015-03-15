@@ -1,7 +1,7 @@
 // Package 11-json-layout-border creates a window with border layout from a JSON definition.
 package main
 
-import "code.google.com/p/ui2go/widget"
+import "github.com/yogischogi/ui2go/widget"
 
 func main() {
 	gui := `{ "Layout":

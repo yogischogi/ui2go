@@ -1,8 +1,8 @@
 package widget
 
 import (
-	"code.google.com/p/ui2go/event"
-	"code.google.com/p/ui2go/native"
+	"github.com/yogischogi/ui2go/event"
+	"github.com/yogischogi/ui2go/native"
 	"image"
 )
 

@@ -1,7 +1,7 @@
 // Package 10-style demonstrates widget style properties.
 package main
 
-import "code.google.com/p/ui2go/widget"
+import "github.com/yogischogi/ui2go/widget"
 
 func main() {
 	win := widget.NewWindow()

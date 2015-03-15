@@ -6,16 +6,16 @@
 package main
 
 import (
-	"code.google.com/p/ui2go/event"
-	"code.google.com/p/ui2go/widget"
 	"errors"
 	"fmt"
+	"github.com/yogischogi/ui2go/event"
+	"github.com/yogischogi/ui2go/widget"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
-const resDir = "src/code.google.com/p/ui2go/examples/04-imageviewer/resources"
+const resDir = "src/github.com/yogischogi/ui2go/examples/04-imageviewer/resources"
 
 var (
 	imageNo    int

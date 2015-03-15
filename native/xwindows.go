@@ -21,8 +21,8 @@ xcb_atom_t getData0(xcb_client_message_data_t msgData){
 import "C"
 
 import (
-	"code.google.com/p/ui2go/event"
 	"github.com/ungerik/go-cairo"
+	"github.com/yogischogi/ui2go/event"
 	"strconv"
 	"unsafe"
 )
