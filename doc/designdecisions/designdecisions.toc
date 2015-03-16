@@ -1,0 +1,13 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}Why ui2go?}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}Programming Situation}{1}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}What I Needed}{2}{subsection.1.2}
+\contentsline {section}{\numberline {2}Events}{2}{section.2}
+\contentsline {subsection}{\numberline {2.1}Event Propagation}{2}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Event Structure}{3}{subsection.2.2}
+\contentsline {section}{\numberline {3}Layout Management}{3}{section.3}
+\contentsline {section}{\numberline {4}Drawing Model}{3}{section.4}
+\contentsline {section}{\numberline {5}Cross Platform}{4}{section.5}
+\contentsline {subsection}{\numberline {5.1}Pros}{4}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Cons}{4}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Solution}{4}{subsection.5.3}

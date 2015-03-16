@@ -1,0 +1,12 @@
+\BOOKMARK [1][-]{section.1}{Why ui2go?}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Programming Situation}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{What I Needed}{section.1}% 3
+\BOOKMARK [1][-]{section.2}{Events}{}% 4
+\BOOKMARK [2][-]{subsection.2.1}{Event Propagation}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.2}{Event Structure}{section.2}% 6
+\BOOKMARK [1][-]{section.3}{Layout Management}{}% 7
+\BOOKMARK [1][-]{section.4}{Drawing Model}{}% 8
+\BOOKMARK [1][-]{section.5}{Cross Platform}{}% 9
+\BOOKMARK [2][-]{subsection.5.1}{Pros}{section.5}% 10
+\BOOKMARK [2][-]{subsection.5.2}{Cons}{section.5}% 11
+\BOOKMARK [2][-]{subsection.5.3}{Solution}{section.5}% 12

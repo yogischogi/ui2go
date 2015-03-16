@@ -1,0 +1,132 @@
+\section{Software Design Philosophies}
+
+When creating a software system there are always a lot of design
+decisions to make. Usually a specific solution is chosen by using a set
+of metrics based upon some kind of philosophy. Because different people
+value different things there are different design philosophies.
+
+People with different philosophies usually don't get along very well and
+there are a lot of misunderstandings, just because they use different
+metrics.
+
+So it is important to take a look at some design approaches to software
+development. There are many, but these are some common ones:
+
+\subsection{Possibility Approach}
+
+In many cases people don't consider advantages or disadvantages of a
+design. In fact, they don't design at all. They just code, trying to
+achieve some goal somehow on the path of least resistance.
+
+Such people often point out that their design is straightforward, simple
+and easy. Their biggest argument is that something is possible
+(\emph{Look! It is possible to do this and that. So it must be good!}).
+If something is possible somehow, many people stop thinking and don't
+ask themselves if there is a better way to do it.
+
+The possibility approach often works quite well for smaller programs,
+but when programs get bigger design problems start to emerge.
+
+\subsubsection{Metrics}
+
+\begin{enumerate}
+\item
+  Is it possible to create a solution in this way?
+\end{enumerate}
+
+\subsubsection{Frequently attributed as}
+
+\begin{enumerate}
+\item
+  hands on
+\item
+  straight forward
+\item
+  simple, easy
+\item
+  pragmatic
+\item
+  quick and dirty
+\end{enumerate}
+
+\subsection{Complexity or Big Boots Approach}
+
+Most people tackle complexity by adding even more complexity. They add
+software layers, libraries and tools to make things easier, but in the
+end it turns out, that the overall complexity got even bigger.
+
+So why is this called the \emph{Big Boots Approach}? Imagine you are
+hiking and get lost in a swamp. Now you could either admit, that you
+took the wrong way, turn around and walk some steps back or you could
+put on your big boots and continue walking, highly praising your boots.
+Due to some mysterious reasons in software industry wearing big boots is
+actually considered as being smart. So it might be a good idea wearing
+them :-) (There is also a nice SpongeBob episode called \emph{Squeaky
+Boots}.)
+
+\subsubsection{Metrics}
+
+\begin{enumerate}
+\item
+  Lots of commands
+\item
+  Shortcuts for every task anyone could imagine.
+\end{enumerate}
+
+\subsubsection{Frequently attributed as}
+
+\begin{enumerate}
+\item
+  powerful
+\item
+  professional
+\item
+  works like magic (no one knows why magic works and if it works at all)
+\end{enumerate}
+
+\subsection{Usability Approach}
+
+I personally believe that legibility is one of the most important
+aspects in writing code because usually most of the time is spend
+maintaining the code and not writing it. In bigger projects writing a
+piece of code and maintaining it is often done by different people. So
+legibility comes to be even more important.
+
+One way to write legible software is using the usability approach.
+Unfortunately when it comes to usability everybody has their own
+opinion. Many are surprised, that usability is actually quite well
+defined and based upon psychological research. Usable code satisfies the
+following criteria:
+
+\subsubsection{Metrics}
+
+\begin{enumerate}
+\item
+  simple
+\item
+  efficient
+\item
+  predictable
+\item
+  fault tolerant
+\item
+  transparent
+\end{enumerate}
+
+\subsubsection{Frequently attributed as}
+
+\begin{enumerate}
+\item
+  easy
+\item
+  user/programmer friendly
+\item
+  less complex
+\item
+  oversimplified
+\end{enumerate}
+
+ui2go tries to implement usable code, because I believe that usable code
+is more important than simple, elegant or powerful code. However, often
+it just turns out to be simple, elegant and powerful.
+

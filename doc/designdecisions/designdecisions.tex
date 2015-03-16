@@ -1,0 +1,219 @@
+% Designdecisions for ui2go.
+%
+% For PDF output: pdflatex designdecisions.tex
+% For HTML output: plastex designdecisions.tex
+%
+% Graphics:
+% Use PNG format to avoid problems with HTML conversion.
+% Recommended size: < 13cm x 18cm (width x height).
+% Recommended resolution: 300 dpi.
+%
+% Use fixed width instead of textwidth, so that plastex can
+% recognize the graphics size. For example use
+% \includegraphics[width=13cm]{img/haplogroups.png}
+% instead of
+% \includegraphics[width=\textwidth]{img/haplogroups.png}
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[colorlinks=true, urlcolor=blue, linkcolor=blue]{hyperref}
+\usepackage{graphicx}
+
+\begin{document}
+\input{title}
+\tableofcontents
+
+
+\section{Why ui2go?}
+
+\subsection{Programming Situation}
+
+\begin{enumerate}
+\item
+  Started learning Korean and wrote a small
+  \href{http://www.projectory.de/koreanisch/index.html}{language course}.
+\item
+  Needed several programs to automate language course building.
+\item
+  No time for programming, wanted to learn Korean (still want to, spent
+  too much time on programming ;-).
+\item
+  As I just spent a few hours every month on programming, the following
+  issues became most important:
+
+  \begin{itemize}
+  \item
+    Readability: After a month I forgot most things I had done before.
+  \item
+    Productivity: I wanted to spend time on programming, not on
+    programming languages and associated tools.
+  \item
+    Incremental programming: I had no time to do big changes at once.
+  \item
+    Stability of programming environment: Widely adopted programming
+    tools often change and require lots of maintenance. This usually
+    goes unnoticed when using them daily.
+  \end{itemize}
+\item
+  Go turned out to be a good choice for the task.
+\item
+  But I needed a simple UI for some tasks sometimes.
+\item
+  Existing UI technologies left me frustrated.
+\end{enumerate}
+
+\subsection{What I Needed}
+
+\begin{enumerate}
+\item
+  Fast creation of simple UIs.
+\item
+  No fully fledged UI toolkit.
+\end{enumerate}
+
+
+\section{Events}
+
+\subsection{Event Propagation}
+
+\begin{enumerate}
+\item
+  Event system should be useful for arbitrary programs.
+\item
+  Event package contains universal event sender and receiver classes.
+\item
+  Every class can be made an event sender or receiver just by mixing in
+  event sender or receiver.
+\item
+  Event senders and receivers support function calls and channels for
+  event propagation.
+\item
+  Programmers can use push or pull style.
+\item
+  In GUI programs: circular control flow metaphor
+
+  \begin{itemize}
+  \item
+    Events flow from input device to GUI, from there to the program
+    logic and back again.
+  \item
+    automatic event propagation from window down to the controls and up
+    again
+  \item
+    automatic event propagation done by function calls (no concurrency
+    issues, much faster than channels)
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Event Structure}
+
+\begin{enumerate}
+\item
+  Traditional event systems are created for performance and hard to use.
+\item
+  Try to create easy-to-use and semantically meaningful events.
+\end{enumerate}
+
+
+\section{Layout Management}
+
+\begin{enumerate}
+\item
+  Inspired by MiG-Layout, but simpler and easier.
+\item
+  Layout is done like printing lines (a bit like like Printf).
+\item
+  Layout manager tries to take the burden from the programmer.
+\item
+  Mock-up mode for testing a layout without creating widgets.
+\item
+  No pixel accurate layout (layout manager tries to automate as much as
+  possible).
+\end{enumerate}
+
+
+\section{Drawing Model}
+
+\begin{enumerate}
+\item
+  All drawing operations are based upon
+  \href{https://github.com/ungerik/go-cairo}{go-cairo}.
+\item
+  Cairo is stable, widely used and well documented.
+\item
+  But cairo is not "goish", feels a bit strange sometimes.
+\item
+  Drawing of widgets (not layout) like CSS box model.
+\end{enumerate}
+
+
+\section{Cross Platform}
+
+\subsection{Pros}
+
+\begin{enumerate}
+\item
+  nice to have the same API on different platforms
+\item
+  results in larger user group
+\item
+  will increase project popularity
+\end{enumerate}
+
+\subsection{Cons}
+
+\begin{enumerate}
+\item
+  A cross platform library does not make a program cross platform.
+
+  \begin{itemize}
+  \item
+    lots of subtle platform specific details (apart from the library),
+    that often require an extreme amount of work for simple tasks
+  \item
+    truly platform independence results in middle-ware OS
+  \end{itemize}
+\item
+  Library will become more complex (error prone and slow).
+\item
+  Dependencies on extra libraries introduce lots of problems (bugs,
+  version changes).
+\item
+  Cross platform design puts restrictions on the project that may
+  turn out as big problems later.
+\item
+  Burden to the programmer.
+
+  \begin{itemize}
+  \item
+    longer training period because of extra complexity
+  \item
+    Programmers need to know the details of the cross platform API and
+    the underlying platform (marketing people always make different
+    claims, but...).
+  \end{itemize}
+\item
+  Platform specific programs tend to be smaller, faster and more usable.
+\end{enumerate}
+
+\subsection{Solution}
+
+\begin{enumerate}
+\item
+  The need for an easy-to-use event system turned the decision in favour
+  of a cross platform solution.
+\item
+  Window abstraction layer directly on top of the system libraries.
+  \begin{itemize}
+  \item
+    small code base
+  \item
+    fast
+  \end{itemize}
+\end{enumerate}
+
+\end{document}
+
+
+
