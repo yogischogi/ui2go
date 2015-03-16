@@ -1,7 +1,9 @@
 # ui2go
 
 ui2go is a toolkit for the creation of graphical user
-interfaces. It is a prototype that features some
+interfaces written in the [Go](http://golang.org/) programming language.
+
+It is a prototype that features some
 interesting concepts, especially in the areas of event
 dispatching and widget layout management.
 
